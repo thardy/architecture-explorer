@@ -280,7 +280,8 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
 
 // We can use the exported json to take a snapshot of the node positions.  This can allow users
 //  to move nodes around and export their locations.  We can then turn the auto-layout option off
-//  and use these positions to manually recreate what the user configured.
+//  and use these positions to manually recreate what the user configured. The json is imported 
+//  using the same function - cy.json(importedJson);
 function exportJson() {
     console.log(globalCy.json());
 }
