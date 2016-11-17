@@ -1,3 +1,5 @@
+var globalCy = {};
+
 document.addEventListener('DOMContentLoaded', function() { // on dom ready
     // possible shape values: rectangle, roundrectangle, ellipse, triangle, pentagon, hexagon, heptagon, octagon, star, diamond, vee, rhomboid, or polygon
     var nodes = [
@@ -172,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
             // padding: 10
         },
     });
+    window.globalCy = cy;
 
     //cy.$('#commissions-db').addClass('shape-database');
 
@@ -191,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
             tappedBefore = tappedNow;
         }
     });
+    console.log(cy.json());
     
     // highlight neighboring nodes on tap
     cy.on('tap', 'node', function(e) {
@@ -274,4 +278,10 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
 
 }); // on dom ready
 
+// We can use the exported json to take a snapshot of the node positions.  This can allow users
+//  to move nodes around and export their locations.  We can then turn the auto-layout option off
+//  and use these positions to manually recreate what the user configured.
+function exportJson() {
+    console.log(globalCy.json());
+}
 
