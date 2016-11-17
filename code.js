@@ -2,21 +2,21 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
     // possible shape values: rectangle, roundrectangle, ellipse, triangle, pentagon, hexagon, heptagon, octagon, star, diamond, vee, rhomboid, or polygon
     var nodes = [
         { data: { id: 'service-bus', name: 'Service Bus', shape: 'roundrectangle', href: '' }, locked: true, position: { x: 900, y: 900 } },
-        
         { data: { id: 'dynamics', name: 'Microsoft Dynamics 365', shape: 'roundrectangle', href: '' } },
         { data: { id: 'dyn-365', name: 'Dynamics 365', parent: 'dynamics', shape: 'roundrectangle', href: '' } },
         { data: { id: 'rssu', name: 'RSSU', parent: 'dynamics', shape: 'roundrectangle', href: '' } },
         { data: { id: 'epi', name: 'EpiServer', shape: 'roundrectangle', href: '' } },
         { data: { id: 'epi-ecomm', name: 'Epi Ecomm', parent: 'epi', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'epi-db', name: 'Epi DB', parent: 'epi', shape: 'roundrectangle', href: '' } },
+        { data: { id: 'epi-db', name: 'Epi DB', parent: 'epi', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
         { data: { id: 'avensia', name: 'Avensia', parent: 'epi', shape: 'roundrectangle', href: '' } },
+        { data: { id: 'dyn-crt', name: 'Dynamics CRT', parent: 'epi', shape: 'roundrectangle', href: '' } },
         { data: { id: 'pd', name: 'Premier Designs', shape: 'roundrectangle', href: '' } },
         { data: { id: 'spa-dash', name: 'SPA Dashboard', parent: 'pd', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'hierarchy-db', name: 'Hierarchy DB', parent: 'pd', shape: 'roundrectangle', href: '' } },
+        { data: { id: 'hierarchy-db', name: 'Hierarchy DB', parent: 'pd', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
         { data: { id: 'awards-service', name: 'Awards Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
         { data: { id: 'email-service', name: 'Email Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
         { data: { id: 'commissions-service', name: 'Commissions Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'commissions-db', name: 'Commissions DB', parent: 'pd', shape: 'roundrectangle', href: '' } },
+        { data: { id: 'commissions-db', name: 'Commissions DB', parent: 'pd', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
         { data: { id: 'commissions-sftp', name: 'Commissions SFTP', shape: 'roundrectangle', href: '' } },
         { data: { id: 'commissions-ala', name: 'Commissions Azure Logic App', shape: 'roundrectangle', href: '' } },
         { data: { id: 'third-party', name: 'Third Party', shape: 'roundrectangle', href: '' } },
@@ -33,14 +33,16 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         { data: { source: 'avensia', target: 'rssu' } },
         { data: { source: 'avensia', target: 'epi-ecomm' } },
         { data: { source: 'avensia', target: 'epi-db' } },
-        { data: { source: 'avensia', target: 'spa-dash' } },
         { data: { source: 'epi-ecomm', target: 'service-bus' } },
+        { data: { source: 'epi-ecomm', target: 'dyn-crt' } },
+        { data: { source: 'dyn-crt', target: 'dyn-365' } },
         { data: { source: 'epi-ecomm', target: 'epi-db' } },
         { data: { source: 'epi-ecomm', target: 'propay' } },
         { data: { source: 'epi-ecomm', target: 'cc-proc' } },
         { data: { source: 'epi-ecomm', target: 'tax-proc' } },
         { data: { source: 'email-service', target: 'service-bus' } },
         { data: { source: 'email-service', target: 'email' } },
+        { data: { source: 'spa-dash', target: 'avensia', label: '???' } },
         { data: { source: 'spa-dash', target: 'epi-ecomm' } },
         { data: { source: 'spa-dash', target: 'service-bus' } },
         { data: { source: 'spa-dash', target: 'hierarchy-db' } },
@@ -56,44 +58,64 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
     var styles = [
         {
             selector: 'node',
-            css: {
+            style: {
                 'content': 'data(name)',
-                'width': 50,
+                //'width': 50,
                 'text-valign': 'center',
                 'text-halign': 'center',
                 'color': 'white',
                 'text-outline-width': 2,
                 'background-color': '#999',
-                'text-outline-color': '#999'
+                'text-outline-color': '#999',
+                 'height': 95,
+                 'width': 95,
+                'background-fit': 'cover',
+                //'border-color': '#000',
+                //'border-width': 3,
+                //'border-opacity': 0.5
+            }
+        },
+        // {
+        //     selector: '#commissions-db',
+        //     style: {
+        //         'background-image': 'images/database-5-med.png',
+        //         'background-opacity': 0
+        //     }
+        // },
+        {
+            selector: 'node[image]',
+            style: {
+                'background-image': 'data(image)',
+                'background-opacity': 0
             }
         },
         {
             selector: 'node[shape]',
-            css: {
+            style: {
                 'shape': 'data(shape)'
             }
         },
         {
             selector: '#service-bus',
-            css: {
+            style: {
                 'width': 800
             }
         },
         {
         selector: '$node > node',
-        css: {
-            'padding-top': '10px',
-            'padding-left': '10px',
-            'padding-bottom': '10px',
-            'padding-right': '10px',
-            'text-valign': 'top',
-            'text-halign': 'center',
-            'background-color': '#bcbcbc'
-        }
+            style: {
+                'padding-top': '10px',
+                'padding-left': '10px',
+                'padding-bottom': '10px',
+                'padding-right': '10px',
+                'text-valign': 'top',
+                'text-halign': 'center',
+                'background-color': '#bcbcbc'
+            }
         },
         {
             selector: 'edge',
-            css: {
+            style: {
                 'curve-style': 'bezier',
                 'target-arrow-shape': 'triangle',
                 'target-arrow-color': '#ccc',
@@ -102,8 +124,14 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
             }
         },
         {
+            selector: 'edge[label]',
+            style: {
+                'label': 'data(label)'
+            }
+        },
+        {
             selector: ':selected',
-            css: {
+            style: {
                 'background-color': 'black',
                 'line-color': 'black',
                 'target-arrow-color': 'black',
@@ -112,8 +140,9 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         },
         {
             selector: '.faded',
-            css: {
+            style: {
                 'opacity': 0.25,
+                //'background-opacity': 1,
                 'text-opacity': 0
             }
         }
@@ -144,6 +173,8 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         },
     });
 
+    //cy.$('#commissions-db').addClass('shape-database');
+
     // define double tap
     var tappedBefore;
     var tappedTimeout;
@@ -166,14 +197,48 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         var node = e.cyTarget; 
         var neighborhood = node.neighborhood().add(node);
         
-        cy.elements().not('$node > node').addClass('faded');
+        //cy.elements().not('$node > node').addClass('faded');
         //cy.elements().addClass('faded');
+        
+        // Fade out all non image, non compound nodes
+        var nodesWithoutImagesAndNotCompounds = cy.elements().not('$node > node').not('node[image]');
+        nodesWithoutImagesAndNotCompounds.addClass('faded');
+        
+        // fade out all image nodes
+        var nodesWithImages = cy.elements('node[image]');
+        for (var i = 0; i < nodesWithImages.length; i++) {
+            var node = nodesWithImages[i];
+            if (node.data('image')) {
+                fadeImage(node);
+            }
+        } 
+        
+        // remove fade from neighbors (using class)
         neighborhood.removeClass('faded');
+        // remove fade from neigbors with images
+        var neighborhoodNodesWithImages = getNodesWithImages(neighborhood);
+        for (var j = 0; j < neighborhoodNodesWithImages.length; j++) {
+            removeImageFade(neighborhoodNodesWithImages[j]);
+        }
+        
     });
 
     cy.on('tap', function(e) {
         if( e.cyTarget === cy ){
-            cy.elements().removeClass('faded');
+            // remove fade class from all non image, non compound nodes
+            var nodesWithoutImagesAndNotCompounds = cy.elements().not('$node > node').not('node[image]');
+            nodesWithoutImagesAndNotCompounds.removeClass('faded');
+            //cy.elements().removeClass('faded');
+
+            // remove fade from all image nodes
+            var nodesWithImages = cy.elements('node[image]');
+            for (var i = 0; i < nodesWithImages.length; i++) {
+                var node = nodesWithImages[i];
+                if (node.data('image')) {
+                    removeImageFade(node);
+                }
+            } 
+            
         }
     });
 
@@ -187,6 +252,25 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
  
     });
 
+    function fadeImage(node) {
+        node.style('background-image', node.data('imageFaded'));
+    }
+
+    function removeImageFade(node) {
+        node.style('background-image', node.data('image'));
+    }
+
+    function getNodesWithImages(array) {
+        var nodesWithImages = [];
+        for (var i = 0; i < array.length; i++) {
+            var node = array[i];
+            if (node.data("image")) {
+                nodesWithImages.push(node);
+            }
+        }
+
+        return nodesWithImages;
+    }
 
 }); // on dom ready
 

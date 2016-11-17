@@ -19,8 +19,10 @@ body {
   top: 1em;
 }
 
-/*.database-image {
+.shape-database {
     width: 95px;
     height: 95px;
-    background: url('images/network-icons.jpg') 0px -95px;
-}*/
+    /*background: url('images/network-icons.jpg') 0px -95px;*/
+    background: url('images/database-5-med.png');
+    background-opacity: 0;
+}
