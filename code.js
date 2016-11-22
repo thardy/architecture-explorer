@@ -178,6 +178,9 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
 
     //cy.$('#commissions-db').addClass('shape-database');
 
+    // testing animation
+    
+
     // define double tap
     var tappedBefore;
     var tappedTimeout;
@@ -286,3 +289,14 @@ function exportJson() {
     console.log(globalCy.json());
 }
 
+function zoomTo(nodeId) {
+    globalCy.animate({ zoom: 1 }, { duration: 500 });
+    globalCy.animate({
+        zoom: 3,
+        center: {
+            eles: globalCy.filter('#' + nodeId)
+        }
+        }, {
+            duration: 500
+    })
+}
