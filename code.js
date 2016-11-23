@@ -3,7 +3,8 @@ var globalCy = {};
 document.addEventListener('DOMContentLoaded', function() { // on dom ready
     // possible shape values: rectangle, roundrectangle, ellipse, triangle, pentagon, hexagon, heptagon, octagon, star, diamond, vee, rhomboid, or polygon
     var nodes = [
-        { data: { id: 'service-bus', name: 'Service Bus', shape: 'roundrectangle', href: '' }, locked: true, position: { x: 900, y: 900 } },
+        //{ data: { id: 'service-bus', name: 'Service Bus', shape: 'roundrectangle', href: '' }, locked: false, position: { x: 900, y: 900 } },
+        { data: { id: 'service-bus', name: 'Service Bus', shape: 'roundrectangle', href: '' } },
         { data: { id: 'dynamics', name: 'Microsoft Dynamics 365', shape: 'roundrectangle', href: '' } },
         { data: { id: 'dyn-365', name: 'Dynamics 365', parent: 'dynamics', shape: 'roundrectangle', href: '' } },
         { data: { id: 'rssu', name: 'RSSU', parent: 'dynamics', shape: 'roundrectangle', href: '' } },
@@ -35,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         { data: { source: 'avensia', target: 'rssu' } },
         { data: { source: 'avensia', target: 'epi-ecomm' } },
         { data: { source: 'avensia', target: 'epi-db' } },
+        { data: { source: 'avensia', target: 'dyn-crt' } },
         { data: { source: 'epi-ecomm', target: 'service-bus' } },
-        { data: { source: 'epi-ecomm', target: 'dyn-crt' } },
         { data: { source: 'dyn-crt', target: 'dyn-365' } },
         { data: { source: 'epi-ecomm', target: 'epi-db' } },
         { data: { source: 'epi-ecomm', target: 'propay' } },
