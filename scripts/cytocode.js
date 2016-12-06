@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         { data: { id: 'rssu', name: 'RSSU', parent: 'dynamics', shape: 'roundrectangle', href: '' } },
         { data: { id: 'epi', name: 'EpiServer', shape: 'roundrectangle', href: '' } },
         { data: { id: 'epi-ecomm', name: 'Epi Ecomm', parent: 'epi', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'epi-db', name: 'Epi DB', parent: 'epi', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
+        { data: { id: 'epi-db', name: 'Epi DB', parent: 'epi', shape: 'roundrectangle', image: '/it/SiteAssets/images/database-5-med.png', imageFaded: '/it/SiteAssets/images/database-5-med-faded.png', href: '' } },
         { data: { id: 'avensia', name: 'Avensia', parent: 'epi', shape: 'roundrectangle', href: '' } },
         { data: { id: 'dyn-crt', name: 'Dynamics CRT', parent: 'epi', shape: 'roundrectangle', href: '' } },
         { data: { id: 'pd', name: 'Premier Designs', shape: 'roundrectangle', href: '' } },
         { data: { id: 'spa-dash', name: 'SPA Dashboard', parent: 'pd', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'hierarchy-db', name: 'Hierarchy DB', parent: 'pd', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
+        { data: { id: 'hierarchy-db', name: 'Hierarchy DB', parent: 'pd', shape: 'roundrectangle', image: '/it/SiteAssets/images/database-5-med.png', imageFaded: '/it/SiteAssets/images/database-5-med-faded.png', href: '' } },
         { data: { id: 'awards-service', name: 'Awards Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
         { data: { id: 'email-service', name: 'Email Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
         { data: { id: 'commissions-service', name: 'Commissions Service', parent: 'pd', shape: 'roundrectangle', href: '' } },
-        { data: { id: 'commissions-db', name: 'Commissions DB', parent: 'pd', shape: 'roundrectangle', image: 'images/database-5-med.png', imageFaded: 'images/database-5-med-faded.png', href: '' } },
+        { data: { id: 'commissions-db', name: 'Commissions DB', parent: 'pd', shape: 'roundrectangle', image: '/it/SiteAssets/images/database-5-med.png', imageFaded: '/it/SiteAssets/images/database-5-med-faded.png', href: '' } },
         { data: { id: 'commissions-sftp', name: 'Commissions SFTP', shape: 'roundrectangle', href: '' } },
         { data: { id: 'commissions-ala', name: 'Commissions Azure Logic App', shape: 'roundrectangle', href: '' } },
         { data: { id: 'third-party', name: 'Third Party', shape: 'roundrectangle', href: '' } },
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         // {
         //     selector: '#commissions-db',
         //     style: {
-        //         'background-image': 'images/database-5-med.png',
+        //         'background-image': '/it/SiteAssets/images/database-5-med.png',
         //         'background-opacity': 0
         //     }
         // },
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         //tile: false,            
         boxSelectionEnabled: false,
         autounselectify: true,
-        wheelSensitivity: 0.4,
+        wheelSensitivity: 0.3,
         minZoom: 0.2,
         maxZoom: 10,
         
@@ -169,10 +169,7 @@ document.addEventListener('DOMContentLoaded', function() { // on dom ready
         },
         
         layout: {
-            name: 'dagre',
-            // name: 'breadthfirst',
-            // directed: true,
-            // padding: 10
+            name: 'dagre'
         },
     });
     window.globalCy = cy;
@@ -291,13 +288,23 @@ function exportJson() {
 }
 
 function zoomTo(nodeId) {
-    globalCy.animate({ zoom: 1 }, { duration: 500 });
-    globalCy.animate({
-        zoom: 3,
-        center: {
-            eles: globalCy.filter('#' + nodeId)
-        }
-        }, {
-            duration: 500
-    })
+    var zoomOutLevel = .6;
+    var zoomInLevel = 1;
+    var duration = 500;
+    //globalCy.animation({ zoom: zoomOutLevel, center: {eles: globalCy.filter('#cy')} }, { duration: duration }).play().promise()
+    globalCy.animation({ fit: {} }, { duration: duration }).play().promise()
+        .then(function(result) { 
+            globalCy.animation(
+                { 
+                    zoom: zoomInLevel,
+                     center: {
+                         eles: globalCy.filter('#' + nodeId)
+                     }
+                },
+                { 
+                    duration: duration
+                }
+            ).play().promise(); 
+        });
+    
 }
